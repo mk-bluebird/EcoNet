@@ -1,0 +1,3 @@
+identityid,identitytype,region,ecoimpactscore,contributionscore,securitytrustscore,currentkarma,karmatolerancelevel,maxintrusionresponselevel,lastincidentseverity,flags,notes
+ID-ECONET-HUMAN-02,Human-Contributor,Sun-City-AZ,0.94,0.96,0.89,0.93,HIGH,LOW,NONE,PROTECTED,Eco-friendly waste management contributor high recycling designs
+ID-AUG-CITIZEN-01,AugmentedCitizen,Phoenix-AZ,0.95,0.97,0.92,0.94,HIGH,LOW,NONE,PROTECTED,Augmented-citizen with biocompatible healthcare focus
