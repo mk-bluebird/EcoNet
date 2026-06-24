@@ -1,0 +1,8 @@
+# EcoNet Augmented Citizen Karma Shard 2026 v1
+# Schema: identityid,identitytype,region,Ei,Ci,Si,Ki,state,twindowstart,twindowend,flags,evidencehex
+
+identityid,identitytype,region,Ei,Ci,Si,Ki,state,twindowstart,twindowend,flags,evidencehex
+ID-AUG-CITIZEN-01,AugmentedCitizen,Phoenix-AZ,0.95,0.97,0.92,0.94,NORMAL,2026-01-01T000000Z,2026-01-31T235959Z,"DataSensitivityHIGH;ProtectedStakeholder","a1b2c3d4e5f67890"
+ID-AUG-CITIZEN-01,AugmentedCitizen,Phoenix-AZ,0.95,0.97,0.92,0.94,UNDERATTACK,2026-02-10T000000Z,2026-02-10T235959Z,"UnderAttackRiskELEVATED;CognitiveSafetyRequiredtrue","1122334455667788"
+ID-ORG-ECO-REPO-01,Repo,Github-Global,0.91,0.94,0.92,0.92,NORMAL,2026-01-01T000000Z,2026-01-31T235959Z,"EcoDesignWasteReduction","f0e1d2c3b4a59687"
+ID-AI-AGENT-ECO-01,AI-Agent,Global,0.88,0.91,0.87,0.89,NORMAL,2026-01-01T000000Z,2026-01-31T235959Z,"KarmaEligibleSession;ChatTokenBound","99aabbccddeeff00"
