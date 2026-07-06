@@ -1,0 +1,106 @@
+# EcoNet Cybo-Aquatic Core Phoenix 2026v1
+# Machine-readable, ALN-compatible qpudatashard for water and air-water nodes
+
+shard_header {
+  shard_id        = "ECO-CQ-PHX-CORE-2026-01";
+  region          = "Phoenix-Central-AZ-US";
+  coord_lat       = 33.4484;
+  coord_lon       = -112.0740;
+  grid_gco2_kwh   = 50;
+  kernel_ceim_hex = "a1b2c3d4e5f67890";
+  kernel_cpvm_hex = "1122334455667788";
+  dt_model_hex    = "f0e1d2c3b4a59687";
+  ktsf_model_hex  = "99aabbccddeeff00";
+}
+
+node_row {
+  node_id        = "CAP-LP-PFBS-NODE";
+  asset_type     = "Reservoir";
+  waterbody      = "Lake Pleasant";
+  cpvm_profile   = "PFASPFBSLPv1";
+  cin_baseline   = 3.9;          # ng/L PFBS
+  cin_unit       = "ng/L";
+  q_avg          = 50.0;         # m3/s
+  q_unit         = "m3/s";
+  horizon_s      = 3600;
+  ecoimpact      = 0.88;
+  karma_per_unit = 1.0e6;
+  evidence_hex   = "a1b2c3d4e5f67890";
+}
+
+node_row {
+  node_id        = "PHX-WTP-ECOLI-01";
+  asset_type     = "Plant";
+  waterbody      = "Phoenix-WTP";
+  cpvm_profile   = "ECOLIGILAINTv1";
+  cin_baseline   = 700.0;        # cfu/100mL
+  cin_unit       = "cfu/100mL";
+  q_avg          = 3.0;          # m3/s
+  q_unit         = "m3/s";
+  horizon_s      = 1800;
+  ecoimpact      = 0.92;
+  karma_per_unit = 2.0e6;
+  evidence_hex   = "1122334455667788";
+}
+
+node_row {
+  node_id        = "CRB-SAL-BASIN-01";
+  asset_type     = "Basin";
+  waterbody      = "Colorado-River-Basin";
+  cpvm_profile   = "SALINITYCRBv1";
+  cin_baseline   = 650.0;        # mg/L TDS
+  cin_unit       = "mg/L";
+  q_avg          = 150.0;        # m3/s
+  q_unit         = "m3/s";
+  horizon_s      = 86400;
+  ecoimpact      = 0.78;
+  karma_per_unit = 6.7e5;
+  evidence_hex   = "f0e1d2c3b4a59687";
+}
+
+node_row {
+  node_id        = "AG-PHX-001";
+  asset_type     = "AirGlobe";
+  medium         = "Air";
+  lane           = "BALANCED";
+  cin_ppm        = 420.5;
+  cout_ppm       = 105.2;
+  flow_q_m3_h    = 2400000.0;
+  regen_kwh      = 115.2;
+  tshell_c       = 41.8;
+  th2o_c         = 32.1;
+  ecoimpact      = 0.89;
+  karma_delta    = 0.87;
+  evidence_hex   = "c1d2e3f4a5b6c7d8";
+}
+
+node_row {
+  node_id        = "PHX-CAIN-HEATVULN-01";
+  asset_type     = "CyboquaticAirIrrigationNode";
+  region_tag     = "HVI-Quartile-4";
+  media_stack    = "BIOCHAR-FIBER-PHX-v1";
+  fan_power_w    = 1.5;
+  water_l_day    = 95.0;
+  pm25_ug_m3_red = 3.4;
+  no2_ug_m3_red  = 2.0;
+  ecoimpact      = 0.88;
+  karma_per_unit = 6.7e5;
+  evidence_hex   = "4a3b2c1d9e8f7g6h";
+}
+
+trust_row {
+  identity_id    = "BOSTROM-PHX-01";
+  role           = "EcoNet-Cyboquatic-Operator";
+  twindow_start  = "2026-01-01T00:00:00Z";
+  twindow_end    = "2026-01-31T23:59:59Z";
+  Ei             = 0.94;
+  Ci             = 0.96;
+  Si             = 0.89;
+  Ki             = 0.93;
+  fluct_lower    = 0.90;
+  fluct_upper    = 0.96;
+  viability_V    = 0.88;
+  safety_flag    = true;
+  cpvm_hex       = "0p1q2r3s4t5u6v7w";
+  karma_hex      = "e1f2a3b4c5d60718";
+}
