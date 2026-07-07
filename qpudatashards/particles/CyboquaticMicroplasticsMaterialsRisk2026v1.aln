@@ -1,0 +1,58 @@
+shard CyboquaticMicroplasticsMaterialsRisk2026v1 {
+  meta {
+    shard_id      = "PHX-CYBOFILT-01-MICRO-20260701";
+    region        = "PHX-Central-Canal";
+    lat           = 33.4500;
+    lon           = -112.0800;
+    medium        = "canalwater";
+    nodetype      = "cyboquatic_filter";
+    cycle_index   = 17;
+    t_start       = "2026-07-01T00:00Z";
+    t_end         = "2026-07-02T00:00Z";
+    evidencehex   = "0xa1b2c3d4e5f67890";
+    signinghex    = "0x9f8e7d6c5b4a3210";
+  }
+
+  metric_fields {
+    k  = 0.95;          // knowledge factor
+    e  = 0.89;          // eco-impact score
+    r  = 0.11;          // residual risk-of-harm
+    vt = 0.0724;        // Lyapunov residual including Rmat
+  }
+
+  corridor_microplastics {
+    m_ref_micro  = 50.0;     // grams, reference saturation load
+    rmat_max     = 0.80;     // max materials-risk coordinate
+    beta         = 2.0;      // sensitivity
+    kloss_per_h  = 0.010;    // 1/h, effective loss constant
+    l_floor      = 0.60;     // LIFEFORCE floor for this node
+    gamma        = 0.15;     // LIFEFORCE penalty gain
+    cin_micro    = 5.0;      // ug/m3, inlet microplastics
+    cout_micro   = 1.0;      // ug/m3, outlet microplastics
+    flow         = 0.30;     // m3/s, canal flow through filter
+    eta_eff      = 0.85;     // effective capture efficiency
+  }
+
+  state_cycle_17 {
+    delta_t_hours    = 24.0;
+    deltaM_plus      = 27.0;        // grams captured this cycle
+    lambda           = 0.90;        // exp(-kloss * delta_t)
+    m_prev           = 120.0;       // grams, previous load
+    m_next           = 135.0;       // grams, updated load
+    rmat             = 0.63;        // materials risk from M_next
+    lifeforce_prev   = 0.72;
+    lifeforce_next   = 0.63;
+    lifeforce_floor  = 0.60;
+  }
+
+  contracts {
+    require corridorpresent("microplastics");
+    require safestep("ecosafety") where vt_next <= vt_current;
+    require lifeforce_next >= lifeforce_floor;
+  }
+
+  governance {
+    kerdeployable = true;
+    lane          = "PROD";
+  }
+}
