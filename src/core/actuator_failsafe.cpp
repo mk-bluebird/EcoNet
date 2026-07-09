@@ -86,7 +86,12 @@ void SubseaActuator::update_state(const ActuatorMetrics& metrics, double target_
     if (!check_safety_corridor(metrics)) {
         engage_fail_safe_isolation("CORRIDOR_VIOLATION");
         return;
- “target_pitch_angle=" + std::to_string(target_pitch_angle) + 
+    }
+
+    // Step 2: Validate physical limits of actuation commands
+    if (!check_physical_limits(target_pitch_angle, target_bypass_flow)) {
+        engage_fail_safe_isolation("PHYSICAL_LIMITS_VIOLATION: " +
+                   "target_pitch_angle=" + std::to_string(target_pitch_angle) + 
                    " target_bypass=" + std::to_string(target_bypass_flow));
         return;
     }
