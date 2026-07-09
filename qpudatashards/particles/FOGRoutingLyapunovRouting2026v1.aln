@@ -1,0 +1,75 @@
+alnversion 1.0
+schema econet.fog.routing.lyapunov2026
+
+particle.meta
+  particleid FOG-Routing-Lyapunov-PHX-2026
+  region Phoenix-AZ-US
+  basins Gila, CAP-Canal
+  author Perplexity-Techgician
+  bostrom_primary bostrom18sd2ujv24ual9c9pshtxys6j8knh6xaead9ye7
+  bostrom_alt bostrom1ldgmtf20d6604a24ztr0jxht7xt7az4jhkmsrc
+  safe_addrs zeta12x0up66pzyeretzyku8p4ccuxrjqtqpdc4y4x8, 0x519fC0eB4111323Cac44b70e1aE31c30e405802D
+end
+
+corridors
+  # varid, units, safe, gold, hard, w, lyapchannel, mandatory
+  rFOGmgL, mgL, 50.0, 150.0, 300.0, 1.0, FOGCH, true
+  rhydraulic, -, 0.2, 0.6, 1.0, 1.0, HYDCH, true
+  rsurcharge, -, 0.1, 0.5, 1.0, 1.0, SURCHCH, true
+  rpow, -, 0.2, 0.7, 1.0, 0.8, POWCH, true
+  rheat, -, 0.2, 0.6, 1.0, 0.8, HEATCH, true
+  rchild, -, 0.1, 0.4, 1.0, 1.5, CHILDCH, true
+  raquatic, -, 0.1, 0.5, 1.0, 1.2, AQUATCH, true
+  rsoil, -, 0.1, 0.5, 1.0, 1.1, SOILCH, true
+  rFPIC, -, 0.0, 0.3, 1.0, 2.0, FPICCH, true
+  runcert, -, 0.0, 0.5, 1.0, 1.0, UNCCH, true
+end
+
+riskkernel
+  residual_type quadratic
+  vt_definition sum_j w_j * r_j^2
+  safestep_invariant vt_next <= vt_curr outside_safe_interior
+end
+
+routingpolicy
+  name FOG-Lyapunov-Routing-2026
+  horizon_steps 24
+  discount_gamma 0.95
+  cost_stage Vt
+  constraints
+    # Lyapunov monotonicity
+    vt_next <= vt_curr
+    # hydraulic capacity
+    q_e_t <= Q_e_max
+    # energy budget
+    sum_n P_n_t <= P_fleet_max
+    # hard corridors for non-offsettable planes
+    rchild <= 1.0
+    raquatic <= 1.0
+    rsoil <= 1.0
+    rFPIC <= 1.0
+  end
+end
+
+shield
+  name FOG-SafetyShield-2026
+  language C++
+  header include/shield.hpp
+  function SafetyShield::check_and_project
+  invariants
+    corridorpresent == true
+    if any r_j_next > 1.0 then action_state DerateStop
+    if vt_next > vt_curr and outside_safe_interior then action_state DerateStop
+  end
+end
+
+metricfields
+  knowledge_factor_min 0.93
+  ecoimpact_target_min 0.90
+  risk_max 0.13
+end
+
+evidence
+  hexstamp_global 0xa3f5c7e9b1d20468c7e4a9d2b5f81357
+  description "Lyapunov-constrained FOG routing kernel for Phoenix sewer-FOG corridors, grounded in CEIM mass kernels and rxVtKER grammar."
+end
