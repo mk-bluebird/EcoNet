@@ -1,0 +1,135 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://javasphere.local/schemas/private/organichain-gas-parameter-set.schema.json",
+  "title": "Private Organichain Gas Parameter Set",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "parameterSetId",
+    "version",
+    "unit",
+    "effectiveAt",
+    "values",
+    "rotation",
+    "governance"
+  ],
+  "properties": {
+    "parameterSetId": {
+      "type": "string",
+      "minLength": 16,
+      "maxLength": 160
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)$",
+      "maxLength": 78
+    },
+    "unit": {
+      "const": "organi-gas-atom"
+    },
+    "effectiveAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "values": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "gas_value_wei_like",
+        "base_cost",
+        "byte_cost",
+        "verification_cost",
+        "approval_cost"
+      ],
+      "properties": {
+        "gas_value_wei_like": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)$",
+          "maxLength": 78
+        },
+        "base_cost": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)$",
+          "maxLength": 78
+        },
+        "byte_cost": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)$",
+          "maxLength": 78
+        },
+        "verification_cost": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)$",
+          "maxLength": 78
+        },
+        "approval_cost": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)$",
+          "maxLength": 78
+        }
+      }
+    },
+    "rotation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "supersedesParameterSetId",
+        "rotationReasonCode",
+        "approvalReference"
+      ],
+      "properties": {
+        "supersedesParameterSetId": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 160
+        },
+        "rotationReasonCode": {
+          "type": "string",
+          "enum": [
+            "initial-configuration",
+            "capacity-model-update",
+            "verification-cost-update",
+            "approval-workflow-update",
+            "security-policy-update",
+            "scheduled-policy-epoch"
+          ]
+        },
+        "approvalReference": {
+          "type": "string",
+          "minLength": 16,
+          "maxLength": 160
+        }
+      }
+    },
+    "governance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "externalActionAuthorized",
+        "actuation",
+        "containsPublicPricing",
+        "containsIdentityData",
+        "containsPrivateKey"
+      ],
+      "properties": {
+        "externalActionAuthorized": {
+          "const": false
+        },
+        "actuation": {
+          "const": "not-performed"
+        },
+        "containsPublicPricing": {
+          "const": false
+        },
+        "containsIdentityData": {
+          "const": false
+        },
+        "containsPrivateKey": {
+          "const": false
+        }
+      }
+    }
+  }
+}
