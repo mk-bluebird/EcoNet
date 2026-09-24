@@ -1,0 +1,90 @@
+aln_version: "2"
+policy_id: "cyboquatic-surcharge-governance-2026-09-22"
+status: "review_required"
+
+data_class:
+  - "environmental_operational_telemetry"
+  - "field_sample_provenance"
+  - "non-identifying_operator_note"
+
+purpose:
+  - "restoration-infrastructure maintenance triage"
+  - "ecological containment decision support"
+  - "auditable human review"
+
+prohibited_uses:
+  - "identity inference"
+  - "eligibility determination"
+  - "autonomous machinery control"
+  - "public status or ranking"
+
+ker_triad:
+  knowledge_k:
+    range: [0.0, 1.0]
+    minimum_for_monitoring_only: 0.80
+  ethics_e:
+    range: [0.0, 1.0]
+    minimum: 0.90
+    safeguards:
+      - "human_fallback"
+      - "accessible_explanation"
+      - "non-discrimination"
+  resource_r:
+    range: [0.0, 1.0]
+    minimum: 0.60
+    safeguards:
+      - "energy_efficient_offline_evaluation"
+      - "field_sampling_minimization"
+      - "reuse_existing_infrastructure"
+
+fog:
+  unmodeled_media:
+    action: "hold_for_human_review"
+    automatic_field_action: false
+  minimum_confidence_for_monitoring_only: 0.70
+  sample_required_when:
+    - "fog_confidence < 0.70"
+    - "media_type == unmodeled"
+    - "sensor_calibration_not_confirmed"
+
+consent_scope:
+  required: true
+  scope: "authorized environmental-operation telemetry only"
+  revocable: false
+  rationale: "A completed incident record is retained only for integrity, safety investigation, and accountable review."
+
+retention:
+  operational_telemetry_days: 90
+  incident_record_days: 2555
+  deletion_method: "scheduled secure deletion subject to applicable preservation duties"
+  minimize_fields: true
+
+accountability:
+  human_review_required_for:
+    - "moderate"
+    - "high"
+    - "critical"
+    - "unmodeled_media"
+    - "incomplete_or_uncalibrated_evidence"
+  appeal_and_correction: true
+  material_change_review: true
+  audit_log: "append_only_sqlite_provenance"
+
+external_action_approval:
+  required: true
+  permitted_actions:
+    - "monitor"
+    - "request_field_sample"
+    - "request_authorized_review"
+  prohibited_actions:
+    - "operate_pump"
+    - "operate_valve"
+    - "automatic_chemical_dosing"
+    - "autonomous_public_notification"
+
+access_equivalence:
+  accessible_reason_required: true
+  communication_modes:
+    - "plain_language_text"
+    - "machine_readable_record"
+    - "human_review_fallback"
